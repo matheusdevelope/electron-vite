@@ -7,7 +7,7 @@ const iconTrayPath = resolve(assets_path, "trayicon.png");
 export default function CreateTray(Server: any) {
   const tray = new Tray(iconTrayPath);
 
-  tray.setToolTip("PIX - Se7e Sistemas");
+  tray.setToolTip("Aplication is running");
 
   const menuTemplate = [
     {
@@ -44,7 +44,7 @@ export default function CreateTray(Server: any) {
         dialog.showMessageBox({
           type: "info",
           title: "Sobre",
-          message: "PIX Se7e Sistemas V.1.0.0",
+          message: "Aplication V.1.0.0",
         });
       },
     },

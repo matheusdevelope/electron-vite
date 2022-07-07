@@ -3,11 +3,6 @@ import * as path from "path";
 import ControlWindow from "./handlers/ControlWindow";
 import CreateTray from "./handlers/CreateTray";
 import CreateWindow from "./handlers/CreateWindow";
-// import ControlWindow from '../handlers/ControlWindow';
-// import CreateWindow from '../handlers/CreateWindow';
-// import CreateTray from '../handlers/CreateTray';
-// import Server_Http from '../../server';
-console.log("Index - Electron");
 
 let Window: any;
 let Tray: any;
@@ -31,15 +26,10 @@ function RunElectron() {
   }
 
   function StartElectron() {
-    console.log("Start Eectron");
     Window = CreateWindow();
     Tray = CreateTray(Server);
     globalShortcut.register("f5", function () {
       console.log("f5 is pressed");
-      Window.reload();
-    });
-    globalShortcut.register("CommandOrControl+R", function () {
-      console.log("CommandOrControl+R is pressed");
       Window.reload();
     });
 
@@ -61,7 +51,6 @@ function RunElectron() {
         );
 
         if (deeplinkingUrl?.includes("electron-fiddle://open/?qrcode=")) {
-          console.log("opening");
           Window.webContents.send(
             "new-qrcode",
             deeplinkingUrl.split("open/?qrcode=")[1]
@@ -69,10 +58,10 @@ function RunElectron() {
           show();
         }
         if (deeplinkingUrl?.includes("electron-fiddle://close")) {
-          console.log("Closing");
           Window.webContents.send("clean-qrcode", "");
           Window.hide();
         }
+        console.log(commandLine);
       }
     });
 
@@ -80,7 +69,6 @@ function RunElectron() {
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
     app.whenReady().then(() => {
-      console.log("Index - Electron ready");
       StartElectron();
     });
 
@@ -95,10 +83,6 @@ function RunElectron() {
       dialog.showErrorBox("Welcome Back", `You arrived from: ${url}`);
     });
   }
-
-  // Quit when all windows are closed, except on macOS. There, it's common
-  // for applications and their menu bar to stay active until the user quits
-  // explicitly with Cmd + Q.
 
   ipcMain.on("open-qrcode", async (event, params) => {
     console.log("open-qrcode", params);

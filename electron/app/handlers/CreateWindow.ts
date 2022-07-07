@@ -1,9 +1,7 @@
 import { BrowserWindow } from "electron";
 import { resolve } from "path";
-// import { Global_State } from '../../global_state';
 
 export default function CreateWindow() {
-  console.log("Create Window");
   const win = new BrowserWindow({
     width: 350,
     height: 410,
@@ -16,11 +14,8 @@ export default function CreateWindow() {
       preload: resolve(__dirname, "../", "preload.js"),
     },
   });
-
-  if (process.env.isDev) {
+  if (process.env.IS_DEV === "true") {
     win.loadURL("http://localhost:3000");
-    //   //win.loadURL("http://127.0.0.1:5500/public/index.html");
-    //   //win.webContents.openDevTools();
   } else {
     win.loadFile(resolve(__dirname, "../", "../", "index.html"));
   }
